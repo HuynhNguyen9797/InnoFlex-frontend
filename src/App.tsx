@@ -2,18 +2,20 @@ import { Route, Routes} from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoutes';
 import BlogList from './pages/BlogList';
 import Header from './components/Header';
+import { Profile } from './pages/Profile';
 
 function App() {
   const routers = (
-    <div style = {{backgroundColor: '#f9f7f0', height: '100vh'}}>
+    <div className='bg-gray-200 min-h-screen flex flex-col'>
     <Header/>
+    <main className='container py-5 flex-1'>
     <Routes>
       <Route element={<PrivateRoute isAccessible={true} />}>
-        <Route path="/about" element={<h1>About page</h1>}></Route>
-        <Route path="/secret" element={<h1>Secret Page</h1>}></Route>
+        <Route path="/profile" element={< Profile/>}></Route>
       </Route>
       <Route path="/" element={<BlogList />}></Route>
     </Routes>
+    </main>
     </div>
     
   );
