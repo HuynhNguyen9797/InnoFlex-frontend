@@ -1,50 +1,50 @@
 import { Form, Input, Modal, Button } from "antd";
 import { useAuthenContext } from "../context/AuthenContext";
 
-export function SinginModal() {
-  const [form] = Form.useForm();
-  const { isOpenSignModal, setOpenSignModal } = useAuthenContext();
+export function PostFrom() {
+  const [createPostForm] = Form.useForm();
+  const { isOpenCreatePostFormModal, setOpenCreatePostFormModal } = useAuthenContext();
   const cancelHanlder = () => {
-    form.resetFields()
-    setOpenSignModal(false);
+    createPostForm.resetFields()
+    setOpenCreatePostFormModal(false);
   };
   const hanlderLogin = (values: any) => {
     console.log(values);
-    form.resetFields()
-    setOpenSignModal(false);
+    createPostForm.resetFields()
+    setOpenCreatePostFormModal(false);
   }
   return (
     <Modal
-      open={isOpenSignModal}
+      open={isOpenCreatePostFormModal}
       onCancel={hanlderLogin}
       footer={null}
     >
-      <h2 className="text-center bold mb-5 font-bold text-lg">Welcome to Wimpy Kids Blog</h2>
+      <h2 className="text-center bold mb-5 font-bold text-lg">Tell us what you think</h2>
       <Form
         name="basic"
         onFinish={hanlderLogin}
         autoComplete="off"
-        form={form}
+        form={createPostForm}
       >
         <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="Title"
+          name="title"
+          rules={[{ required: true, message: "Please input your title" }]}
         >
-          <Input />
+          <Input className="w-96 ml-6" />
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          label="Content"
+          name="content"
+          rules={[{ required: true, message: "Please input your content" }]}
         >
-          <Input.Password />
+          <Input.TextArea  rows={6}/>
         </Form.Item>
 
         <Form.Item className="flex justify-center gap-10">
         <Button  className="px-10 mr-10 font-bold" htmlType="submit">
-          Sign in 
+          Upload
         </Button>
         <Button className="px-10 font-bold" htmlType="button" onClick={cancelHanlder}>
           Cancel

@@ -5,24 +5,29 @@ interface IUser {
   role: string;
   username: string;
 }
-enum UserRoles {
-  ADMIN = "Admin",
-  MEMBER = "Member",
-}
  interface IAuthenContext {
   user: IUser | null;
-  isAdmin?: (user: IUser) => boolean;
-  isMember?: (user: IUser) => boolean;
   setUser?: (User: IUser) => void;
   setOpenSignModal: (isOpen: boolean) => void;
   isOpenSignModal: boolean,
-  isLogedIn?: (User: IUser) => boolean;
+  isOpenSignUpModal: boolean,
+  setOpenSignUpModal: (isOpen: boolean) => void;
+  isOpenCreatePostFormModal: boolean,
+  setOpenCreatePostFormModal: (isOpen: boolean) => void,
+  isOpenDelete: boolean,
+  setOpenDelete: (isOpen: boolean) => void,
 }
 
 export const AuthenContext = createContext<IAuthenContext>({
   user: null,
   isOpenSignModal: false,
-  setOpenSignModal: () => {}
+  setOpenSignModal: () => {},
+  isOpenSignUpModal: false,
+  setOpenSignUpModal: () => {},
+  isOpenCreatePostFormModal: false,
+  setOpenCreatePostFormModal: () => {},
+  isOpenDelete: false,
+  setOpenDelete: () => {}
 });
 
 export function AuthenProvider({
@@ -30,9 +35,9 @@ export function AuthenProvider({
 }: {children: JSX.Element}) {
   const [user, setUser] = useState<IUser | null>(null);
   const [isOpenSignModal, setOpenSignModal] = useState<boolean>(false)
-  const isAdmin = () => user ? user.role === UserRoles.ADMIN : false;
-  const isMember = () => user ? user.role === UserRoles.MEMBER: false;
-  const isLogedIn = () => !!user
+  const [isOpenSignUpModal, setOpenSignUpModal] = useState<boolean>(false)
+  const [isOpenCreatePostFormModal, setOpenCreatePostFormModal] = useState<boolean>(false)
+  const [isOpenDelete, setOpenDelete] = useState<boolean>(false)
   useEffect(() => {
     setUser(null)
   }, [])
@@ -40,12 +45,15 @@ export function AuthenProvider({
     <AuthenContext.Provider
       value={{
         user,
-        isAdmin,
-        isMember,
         setUser,
-        isLogedIn,
         isOpenSignModal,
         setOpenSignModal,
+        isOpenSignUpModal,
+        setOpenSignUpModal,
+        isOpenCreatePostFormModal,
+        setOpenCreatePostFormModal,
+        isOpenDelete,
+        setOpenDelete
       }}
     >
       {children}

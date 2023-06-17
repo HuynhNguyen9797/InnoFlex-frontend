@@ -1,18 +1,23 @@
-import React from 'react';
 import { useAuthenContext } from '../context/AuthenContext';
-import {Button} from 'antd'
+import {Button} from 'antd';
+import { HeaderDropDown } from './HeaderDropDown';
 
 export function HeaderButton(){
-  const {user, setOpenSignModal } = useAuthenContext();
-  const handlerClick = () => {
+  const {user, setOpenSignModal, setOpenSignUpModal } = useAuthenContext();
+  const handlerSignInClick = () => {
     setOpenSignModal(true);
+  }
+
+  const handleSignUpClick = () => {
+    console.log('sign up');
+    setOpenSignUpModal(true)
   }
   return <div>
     {
-      user ? <span>{user.username}</span> :
+      false ? <HeaderDropDown/> :
       <div>
-        <Button size='large' className='bg-blue-500 text-white mr-5 ' onClick = {handlerClick}>Sign up </Button>
-        <Button size='large' className='bg-white ' onClick = {handlerClick}>Sign in </Button>
+        <Button size='large' className='bg-blue-500 text-white mr-5 ' onClick = {handleSignUpClick}>Sign up </Button>
+        <Button size='large' className='bg-white ' onClick = {handlerSignInClick}>Sign in </Button>
       </div>
     }
   </div>
