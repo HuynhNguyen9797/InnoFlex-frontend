@@ -1,11 +1,13 @@
 import { useNavigate, useLocation   } from "react-router-dom";
 import { AiOutlineArrowDown } from "react-icons/Ai";
 import { useState } from "react";
+import { useAuthenContext } from "../context/AuthenContext";
 
 export function HeaderDropDown() {
   const [isOpenList, toggleOpenList] = useState(false);
   const navigate = useNavigate();
   const location = useLocation ();
+  const {user} = useAuthenContext();
 
   const redirectToProfile = () => {
     toggleOpenList(prev => !prev)
@@ -24,7 +26,7 @@ export function HeaderDropDown() {
       </div>: null
       }
       <div className="text-white ">
-        <span>Ngoc Huynh Nguyen</span>
+        <span>{user?.username}</span>
       </div>
       {
         location.pathname !== '/profile' && isOpenList ? 

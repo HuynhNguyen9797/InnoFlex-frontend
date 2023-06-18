@@ -1,17 +1,27 @@
 import { Form, Input, Modal, Button } from "antd";
 import { useAuthenContext } from "../context/AuthenContext";
+import {login} from '../service/userService'
 
 export function SinginModal() {
   const [form] = Form.useForm();
-  const { isOpenSignModal, setOpenSignModal } = useAuthenContext();
+  const { isOpenSignModal, setOpenSignModal, setUser, reload, setReload } = useAuthenContext();
   const cancelHanlder = () => {
     form.resetFields()
     setOpenSignModal(false);
   };
-  const hanlderLogin = (values: any) => {
-    console.log(values);
+  const hanlderLogin = async (values: any) => {
+   const {username, password} = values;
+   const result : any = await login(username, password);
+   if(result.errorMessage){
+    alert(result.errorMessage)
+  } else {
+    const {token, username, id} = result;
+    localStorage.setItem('apiToken', token);
+    setUser({id, username})
+  }
     form.resetFields()
     setOpenSignModal(false);
+    setReload(!reload)
   }
   return (
     <Modal

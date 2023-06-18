@@ -1,15 +1,21 @@
 import { Modal, Button } from "antd";
 import { useAuthenContext } from "../context/AuthenContext";
+import { deletePost} from '../service/postService';
 
 export function ConFirmDeleteModal() {
-  const { isOpenDelete, setOpenDelete } = useAuthenContext();
+  const { isOpenDelete, setOpenDelete, currentPost , reload, setReload } = useAuthenContext();
   const cancelHanlder = () => {
-   console.log('cancel');
    setOpenDelete(false)
   };
-  const hanlderDelete = () => {
+  const hanlderDelete = async () => {
+    const result: any = await deletePost(currentPost.id);
+    if(result.errorMessage){
+      alert(result.errorMessage)
+    } else {
+      alert('Delete post successfully!')
+    }
     setOpenDelete(false);
-    console.log('delete')
+    setReload(!reload);
   };
   return (
     <Modal

@@ -1,12 +1,13 @@
-import {Post} from './Post';
-export function PostList(){
-  return <div className=" max-w-xl mx-auto" >
-    <Post/>
-    <Post/>
-    <Post/>
-    <Post/>
-    <Post/>
-    <Post/>
-    <Post/>
-  </div>
+import { Post } from "./Post";
+import { IPost } from "../service/postService";
+export function PostList({ postLists }: { postLists: IPost[] }) {
+  return (
+    <div className=" max-w-xl mx-auto">
+      {
+        postLists.length !== 0 ?
+      postLists.map((post) => <Post key={post.id} post={post} />)
+      : <h1>There no post available</h1>
+      }
+    </div>
+  );
 }
